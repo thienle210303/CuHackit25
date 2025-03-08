@@ -1,8 +1,10 @@
 import React, { useState } from "react"
 import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api"
 import axios from "axios"
+import axios from "axios"
 
 import EventCreateForm from "./components/EventCreateForm"
+
 
 import icon from "./assets/icon.jpeg"
 import data from "./DummyData.jsx"
@@ -182,6 +184,7 @@ function App() {
                   <p><strong>Location:</strong> {selectedEvent.location}</p>
                   <p><strong>Start Time:</strong> {new Date(selectedEvent.startTime).toLocaleString()}</p>
                   <p><strong>End Time:</strong> {new Date(selectedEvent.endTime).toLocaleString()}</p>
+
 
                   <button className="btn btn-info"
                     onClick={() => window.open(selectedEvent.url, "_blank", "noopener,noreferrer")}
