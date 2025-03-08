@@ -15,6 +15,7 @@ The Event Map Web Application is a platform that allows users to view and intera
 - **AWS Location Services**: Used to resolve building names to full addresses for event locations.
 - **Gemini API**: For summarizing event descriptions and providing relevant summaries.
 - **BeautifulSoup**: A Python library for web scraping, used to gather data from the Clemson University official website.
+- **AWS BedRock***:  Used to suggest events based on user input in the search bar. It helps recommend events relevant to the user's preferences.
 
 
 ### Frontend:
