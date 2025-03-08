@@ -86,8 +86,6 @@ Special thanks to the creators of the libraries and APIs used in this project:
 - Google Maps API
 - BeautifulSoup
 - Gemini API
-- vbnet
-- Copy
-- Edit
+
 
    
