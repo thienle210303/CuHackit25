@@ -1,7 +1,9 @@
 import React, { useState } from "react"
 import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api"
+import axios from "axios"
 
 import EventCreateForm from "./components/EventCreateForm"
+
 import icon from "./assets/icon.jpeg"
 import data from "./DummyData.jsx"
 
@@ -37,12 +39,20 @@ function App() {
     window.location.reload()
   }
 
-  const handleSearch = () => {
-    const filtered = events.filter((event) =>
+  const handleSearch = async () => {
+    let filtered = events.filter((event) =>
       event.name.toLowerCase().includes(searchInput.toLowerCase()) ||
       event.description.toLowerCase().includes(searchInput.toLowerCase()) ||
       event.organizer.toLowerCase().includes(searchInput.toLowerCase())
     )
+    if (filtered.length <= 0) {
+      const textResponse = await handleBedrockRequest(searchInput)
+      filtered = events.filter((event) =>
+        event.name.toLowerCase().includes(textResponse.toLowerCase()) ||
+        event.description.toLowerCase().includes(textResponse.toLowerCase()) ||
+        event.organizer.toLowerCase().includes(textResponse.toLowerCase())
+      )
+    }
     setFilteredEvents(filtered)
   }
 
@@ -57,6 +67,23 @@ function App() {
     })
     handleMarkerClick(event)
   }
+
+  const handleBedrockRequest = async (text) => {
+    const requestData = {
+      InputText: text,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5119/api/bedrock/invoke",
+        requestData
+      );
+      return response.data.response.results[0].outputText
+    } catch (error) {
+      console.error("Error making POST request:", error);
+    }
+    return ""
+  };
 
   return (
     <>
@@ -155,7 +182,7 @@ function App() {
                   <p><strong>Location:</strong> {selectedEvent.location}</p>
                   <p><strong>Start Time:</strong> {new Date(selectedEvent.startTime).toLocaleString()}</p>
                   <p><strong>End Time:</strong> {new Date(selectedEvent.endTime).toLocaleString()}</p>
-                  
+
                   <button className="btn btn-info"
                     onClick={() => window.open(selectedEvent.url, "_blank", "noopener,noreferrer")}
                   >
