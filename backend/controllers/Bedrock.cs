@@ -47,7 +47,7 @@ public class BedrockController : ControllerBase
     {
       string requestBody = $@"
             {{
-                ""inputText"": ""Given the following user input text: {request.InputText}, classify it into one of the following categories: Hackathon, Food, Tech Talk, Code, Networking Lunch, Project Showcase, Racing, AI, Develop, Course. Return only the most relevant category"",
+                ""inputText"": ""Given the following user input text: {request.InputText}, classify it into one of the following categories: Hackathon, Food, Tech Talk, Code, Networking Lunch, Project Showcase, Racing, AI, Develop, Course. Return only the most relevant category."",
                 ""textGenerationConfig"": {{
                     ""maxTokenCount"": 8192,
                     ""stopSequences"": [],

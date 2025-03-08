@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-const EventCreateForm = () => {
+const EventCreateForm = ({setEvents}) => {
   const [eventDetails, setEventDetails] = useState({
     name: "",
     startTime: "",
@@ -9,10 +9,8 @@ const EventCreateForm = () => {
     url: "",
     description: "",
     organizer: "",
-    performer: "",
     latitude: "",
     longitude: "",
-    image: ""
   })
 
   const handleEventChange = (e) => {
@@ -25,6 +23,7 @@ const EventCreateForm = () => {
 
   const handleSubmitEvent = () => {
     console.log("Event details submitted:", eventDetails)
+    setEvents((prev) => [...prev, eventDetails])
     document.getElementById("event_modal").close()
   }
 

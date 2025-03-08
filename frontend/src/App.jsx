@@ -3,8 +3,6 @@ import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/ap
 import axios from "axios"
 
 import EventCreateForm from "./components/EventCreateForm"
-
-
 import icon from "./assets/icon.jpeg"
 import data from "./DummyData.jsx"
 
@@ -47,7 +45,11 @@ function App() {
       event.organizer.toLowerCase().includes(searchInput.toLowerCase())
     )
     if (filtered.length <= 0) {
-      const textResponse = await handleBedrockRequest(searchInput)
+      let textResponse = await handleBedrockRequest(searchInput)
+      let startIndex = textResponse.indexOf('is') + 2;
+      let endIndex = textResponse.indexOf('.', startIndex);
+      textResponse = textResponse.slice(startIndex, endIndex === -1 ? undefined : endIndex).trim().toLowerCase()
+      console.log(textResponse)
       filtered = events.filter((event) =>
         event.name.toLowerCase().includes(textResponse.toLowerCase()) ||
         event.description.toLowerCase().includes(textResponse.toLowerCase()) ||
@@ -121,7 +123,7 @@ function App() {
           </label>
 
           {searchInput.trim() && filteredEvents.length > 0 && (
-            <ul className="absolute top-full mt-2 w-full menu bg-gray-900 text-white rounded-lg shadow-lg z-50 h-64 gap-2 overflow-auto">
+            <ul className="absolute top-full mt-2 w-full menu bg-gray-900 text-white rounded-lg shadow-lg z-50 max-h-64 gap-2 overflow-auto">
               {filteredEvents.map((event) => (
                 <li key={event.id} className="border-b border-gray-700 last:border-none">
                   <div className="flex justify-between items-center p-2 hover:bg-gray-800 transition">
@@ -147,7 +149,7 @@ function App() {
           >
             Current Location
           </button>
-          <EventCreateForm />
+          <EventCreateForm setEvents={setEvents}/>
         </div>
       </div>
 
@@ -184,8 +186,6 @@ function App() {
                   <p><strong>Location:</strong> {selectedEvent.location}</p>
                   <p><strong>Start Time:</strong> {new Date(selectedEvent.startTime).toLocaleString()}</p>
                   <p><strong>End Time:</strong> {new Date(selectedEvent.endTime).toLocaleString()}</p>
-
-
                   <button className="btn btn-info"
                     onClick={() => window.open(selectedEvent.url, "_blank", "noopener,noreferrer")}
                   >
