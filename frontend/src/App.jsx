@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api"
 import axios from "axios"
-import axios from "axios"
 
 import EventCreateForm from "./components/EventCreateForm"
 
@@ -122,7 +121,7 @@ function App() {
           </label>
 
           {searchInput.trim() && filteredEvents.length > 0 && (
-            <ul className="absolute top-full mt-2 w-full menu bg-gray-900 text-white rounded-lg shadow-lg z-50">
+            <ul className="absolute top-full mt-2 w-full menu bg-gray-900 text-white rounded-lg shadow-lg z-50 h-64 gap-2 overflow-auto">
               {filteredEvents.map((event) => (
                 <li key={event.id} className="border-b border-gray-700 last:border-none">
                   <div className="flex justify-between items-center p-2 hover:bg-gray-800 transition">
@@ -180,7 +179,8 @@ function App() {
               >
                 <div className="text-black flex flex-col gap-1">
                   <h3 className="font-bold text-lg">{selectedEvent.name}</h3>
-                  <p>{selectedEvent.description}</p>
+                  <p className="mb-2">{selectedEvent.description}</p>
+                  <p><strong>Location:</strong> {selectedEvent.organizer}</p>
                   <p><strong>Location:</strong> {selectedEvent.location}</p>
                   <p><strong>Start Time:</strong> {new Date(selectedEvent.startTime).toLocaleString()}</p>
                   <p><strong>End Time:</strong> {new Date(selectedEvent.endTime).toLocaleString()}</p>
